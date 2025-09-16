@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>DevOps Logs</title>
+  <title>DevOps Live Logs</title>
   <style>
     body {
       background-color: #1e1e1e;
@@ -37,17 +37,35 @@
   </style>
 </head>
 <body>
-  <header>DevOps Log Viewer</header>
+  <header>DevOps Live Log Viewer</header>
 
-  <div class="log-window">
-    <div class="log-line info">[INFO] Jenkins: Build #101 started by user admin</div>
-    <div class="log-line success">[SUCCESS] Jenkins: Build #101 completed successfully</div>
-    <div class="log-line warn">[WARN] Tomcat: Session timeout not configured</div>
-    <div class="log-line error">[ERROR] Tomcat: ServletException at /api/data</div>
-    <div class="log-line info">[INFO] Docker: Pulling image node:18</div>
-    <div class="log-line success">[SUCCESS] Docker: Container started backend_service</div>
-    <div class="log-line warn">[WARN] AWS: High CPU usage on EC2 instance i-0abc123</div>
-    <div class="log-line error">[ERROR] AWS: CloudWatch Alarm triggered - DiskSpaceLow</div>
+  <div class="log-window" id="logWindow">
+    <div class="log-line info">[INFO] DevOps log stream started...</div>
   </div>
-</body>
-</html>
+
+  <script>
+    const logWindow = document.getElementById("logWindow");
+
+    const logs = [
+      { type: "info", text: "Jenkins: Build #102 started by user admin" },
+      { type: "success", text: "Jenkins: Build #102 completed successfully" },
+      { type: "warn", text: "Tomcat: Session timeout not configured" },
+      { type: "error", text: "Tomcat: ServletException at /api/users" },
+      { type: "info", text: "Docker: Pulling image postgres:15" },
+      { type: "success", text: "Docker: Container started db_service" },
+      { type: "warn", text: "AWS: High CPU usage on Lambda function payments" },
+      { type: "error", text: "AWS: CloudWatch Alarm triggered - DiskSpaceLow" }
+    ];
+
+    function addLog() {
+      const log = logs[Math.floor(Math.random() * logs.length)];
+      const line = document.createElement("div");
+      line.className = `log-line ${log.type}`;
+      const timestamp = new Date().toLocaleTimeString();
+      line.textContent = `[${log.type.toUpperCase()}] ${timestamp} - ${log.text}`;
+      logWindow.appendChild(line);
+      logWindow.scrollTop = logWindow.scrollHeight; // auto scroll
+    }
+
+    // Add a new log every 2 seconds
+    setInter
