@@ -23,5 +23,5 @@ spec:
     spec:
       containers:
         - name: fb-container
-          image: sravani2310/mcapp:latest
+          image: devopshubg333/batch16d:pythonimg
     
